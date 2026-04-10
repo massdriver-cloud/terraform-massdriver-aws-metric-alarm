@@ -30,7 +30,7 @@ module "cpu_alarm" {
   display_name = "CPU High"
   message      = "CPU utilization exceeded threshold"
 
-  sns_topic_arn = module.alarm_channel.sns_topic_arn
+  sns_topic_arn = module.alarm_channel.arn
   md_metadata   = var.md_metadata
 
   comparison_operator = "GreaterThanOrEqualToThreshold"
@@ -55,7 +55,7 @@ module "error_rate_alarm" {
   display_name = "Error Rate"
   message      = "Error rate exceeded threshold"
 
-  sns_topic_arn = module.alarm_channel.sns_topic_arn
+  sns_topic_arn = module.alarm_channel.arn
   md_metadata   = var.md_metadata
 
   comparison_operator = "GreaterThanThreshold"
@@ -140,7 +140,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cloudwatch_metric_alarm_arn"></a> [cloudwatch\_metric\_alarm\_arn](#output\_cloudwatch\_metric\_alarm\_arn) | The ARN of the CloudWatch metric alarm. |
+| <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the CloudWatch metric alarm. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Authors
