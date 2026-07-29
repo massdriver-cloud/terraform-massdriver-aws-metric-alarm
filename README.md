@@ -10,7 +10,7 @@ This module is designed to be used alongside [`terraform-massdriver-aws-alarm-ch
 - Supports simple single-metric alarms (`metric_name`, `namespace`, `period`, `statistic`)
 - Supports metric math expression alarms (`metric_queries`) for complex multi-metric conditions
 - Validates inputs at plan time to enforce mutual exclusivity between the two modes
-- Registers the alarm with Massdriver for UI visibility via `massdriver_package_alarm`
+- Registers the alarm with Massdriver for UI visibility via `massdriver_instance_alarm`
 
 ## Usage
 
@@ -93,17 +93,21 @@ module "error_rate_alarm" {
 }
 ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
+| <a name="requirement_massdriver"></a> [massdriver](#requirement\_massdriver) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.40.0 |
-| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 1.3.4 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.56.0 |
+| <a name="provider_massdriver"></a> [massdriver](#provider\_massdriver) | 2.1.0 |
 
 ## Modules
 
@@ -114,7 +118,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_cloudwatch_metric_alarm.alarm](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm) | resource |
-| [massdriver_package_alarm.package_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/package_alarm) | resource |
+| [massdriver_instance_alarm.instance_alarm](https://registry.terraform.io/providers/massdriver-cloud/massdriver/latest/docs/resources/instance_alarm) | resource |
 
 ## Inputs
 
@@ -141,7 +145,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the CloudWatch metric alarm. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
 
 ## Authors
 
