@@ -1,11 +1,12 @@
 locals {
   is_expression = var.metric_queries != null
 
-  # Resolve display values for massdriver_package_alarm based on alarm mode
+  # Resolve display values for massdriver_instance_alarm based on alarm mode
   display_metric_name = local.is_expression ? var.metric_queries[var.display_metric_key].metric.metric_name : var.metric_name
   display_namespace   = local.is_expression ? var.metric_queries[var.display_metric_key].metric.namespace : var.namespace
   display_statistic   = local.is_expression ? try(var.metric_queries[var.display_metric_key].metric.stat, null) : var.statistic
   display_dimensions  = local.is_expression ? try(var.metric_queries[var.display_metric_key].metric.dimensions, {}) : coalesce(var.dimensions, {})
+  display_period      = local.is_expression ? try(var.metric_queries[var.display_metric_key].metric.period, null) : var.period
 }
 
 resource "aws_cloudwatch_metric_alarm" "alarm" {
@@ -75,9 +76,14 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   }
 }
 
-resource "massdriver_package_alarm" "package_alarm" {
+resource "massdriver_instance_alarm" "instance_alarm" {
   display_name      = var.display_name
   cloud_resource_id = aws_cloudwatch_metric_alarm.alarm.arn
+
+  comparison_operator = var.comparison_operator
+  threshold           = var.threshold
+  period              = local.display_period
+
   metric {
     name       = local.display_metric_name
     namespace  = local.display_namespace
