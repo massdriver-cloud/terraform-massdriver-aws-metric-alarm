@@ -1,4 +1,8 @@
 locals {
+  # Organizations with custom default tags always have `md-instance`. Legacy organizations
+  # only have `md-package`, which carries the name_prefix. Massdriver accepts either.
+  instance = contains(keys(var.md_metadata.default_tags), "md-instance") ? tomap({ "md-instance" = var.md_metadata.default_tags["md-instance"] }) : tomap({ name_prefix = var.md_metadata.name_prefix })
+
   is_expression = var.metric_queries != null
 
   # Resolve display values for massdriver_instance_alarm based on alarm mode
@@ -14,10 +18,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
 
   # CloudWatch alarm notifications carry no resource tags. Massdriver reads the
   # instance identifier from this JSON to attach the alarm to its instance.
-  alarm_description = jsonencode({
-    "md-instance" = var.md_metadata.default_tags["md-instance"]
-    message       = var.message
-  })
+  alarm_description = jsonencode(merge(local.instance, { message = var.message }))
 
   comparison_operator = var.comparison_operator
   evaluation_periods  = var.evaluation_periods

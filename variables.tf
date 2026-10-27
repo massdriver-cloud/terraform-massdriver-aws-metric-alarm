@@ -2,7 +2,7 @@
 
 variable "md_metadata" {
   type        = any
-  description = "Massdriver metadata object, must include an md-instance entry in default_tags."
+  description = "Massdriver metadata object, must include name_prefix and default_tags."
 }
 
 variable "message" {
