@@ -1,7 +1,6 @@
 locals {
-  # Organizations with custom default tags always have `md-instance`. Legacy organizations
-  # only have `md-package`, which carries the name_prefix. Massdriver accepts either.
-  instance = contains(keys(var.md_metadata.default_tags), "md-instance") ? tomap({ "md-instance" = var.md_metadata.default_tags["md-instance"] }) : tomap({ name_prefix = var.md_metadata.name_prefix })
+  # Legacy default tags have no md-instance, only md-package (the name_prefix).
+  instance = try({ "md-instance" = var.md_metadata.default_tags["md-instance"] }, { name_prefix = var.md_metadata.name_prefix })
 
   is_expression = var.metric_queries != null
 
